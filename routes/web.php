@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -35,13 +36,8 @@ Route::fallback(function () {
     return "Não existe nada aqui!";
 });
 
-Route::post('/tasks', function (Request $request) {
-    $data = $request->validate([
-        'title'=> 'required|max:255',
-        'description'=> 'required',
-        'long_description'=>'required'
-    ]);
-
+Route::post('/tasks', function (TaskRequest $request) {
+    $data = $request->validated();
     $task = new Task();
     $task->title = $data['title'];
     $task->description = $data['description'];
@@ -52,13 +48,8 @@ Route::post('/tasks', function (Request $request) {
     ->with('success', 'Task created successfully!');
 })->name('task.store');
 
-Route::put('/tasks/{task}', function (Task $task, Request $request) {
-    $data = $request->validate([
-        'title'=> 'required|max:255',
-        'description'=> 'required',
-        'long_description'=>'required'
-    ]);
-
+Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
+    $data = $request->validated();
     $task->title = $data['title'];
     $task->description = $data['description'];
     $task->long_description = $data['long_description'];
