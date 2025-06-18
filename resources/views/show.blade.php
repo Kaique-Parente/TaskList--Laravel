@@ -13,5 +13,11 @@
 
         <p>{{ $task->completed }}</p>
         <p>{{ $task->created_at }}</p>
+
+        <form method="POST" action="{{route('task.destroy', ['task'=>$task])}}">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete</button>
+        </form>
     </div>
 @endsection
