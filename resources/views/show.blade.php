@@ -14,6 +14,8 @@
         <p>{{ $task->completed }}</p>
         <p>{{ $task->created_at }}</p>
 
+        <a href="{{route('tasks.edit', ['task'=>$task])}}">Edit</a>
+
         <form method="POST" action="{{route('task.destroy', ['task'=>$task])}}">
             @csrf
             @method('DELETE')
