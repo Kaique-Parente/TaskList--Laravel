@@ -10,4 +10,6 @@ class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory, Notifiable;
+
+    protected $fillable = ['title', 'description', 'long_description'];
 }
