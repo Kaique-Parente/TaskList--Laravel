@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="mb-4">
-        <a href={{ route('tasks.index') }} class="font-medium text-gray-700 underline decoration-pink-500">← Go back to the
+        <a href={{ route('tasks.index') }} class="link">← Go back to the
             task list!</a>
     </div>
 
@@ -19,22 +19,22 @@
 
     <p>{{ $task->completed ? 'Completed' : 'Not completed' }}</p>
 
-    <a href="{{ route('tasks.edit', ['task' => $task]) }}">Edit</a>
+    <div class="flex gap-3">
+        <a href="{{ route('tasks.edit', ['task' => $task]) }}" class="btn">Edit</a>
 
-    <div>
         <form method="POST" action="{{ route('task.toggle-complete', ['task' => $task]) }}">
             @csrf
             @method('PUT')
-            <button>
+            <button class="btn">
                 Mark as {{ $task->completed ? 'not-completed' : 'completed' }}
             </button>
         </form>
-    </div>
 
-    <form method="POST" action="{{ route('task.destroy', ['task' => $task]) }}">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Delete</button>
-    </form>
+        <form method="POST" action="{{ route('task.destroy', ['task' => $task]) }}">
+            @csrf
+            @method('DELETE')
+            <button class="btn" type="submit">Delete</button>
+        </form>
+    </div>
 
 @endsection
