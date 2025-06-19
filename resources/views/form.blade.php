@@ -2,53 +2,55 @@
 
 @section('title', isset($task) ? 'Edit Task!' : 'Add new Task!')
 
-@section('styles')
-    <style>
-        .error-message {
-            color: red;
-            font-size: 0.8rem;
-        }
-    </style>
-@endsection
-
 @section('content')
     <form method="POST" action="{{ isset($task) ? route('task.update', ['task' => $task]) : route('task.store') }}">
         @csrf
         @isset($task)
             @method('PUT')
         @endisset
-        <div>
+
+        <div class="mb-4">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="{{ isset($task) ? $task->title : old('title') }}">
+            <input type="text" name="title" id="title" @class(['outline-red-500' => $errors->has('title')])
+                value="{{ isset($task) ? $task->title : old('title') }}">
             @error('title')
-                <p class="error-message">{{ $message }}</p>
+                <p class="error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div>
+        <div class="mb-4">
             <label for="description">Description</label>
-            <textarea name="description" id="description" rows="5">{{ isset($task) ? $task->description : old('description') }}</textarea>
+            <textarea @class(['outline-red-500' => $errors->has('description')]) name="description" id="description" rows="5">
+                {{ isset($task) ? $task->description : old('description') }}
+            </textarea>
+
             @error('description')
-                <p class="error-message">{{ $message }}</p>
+                <p class="error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div>
+        <div class="mb-4">
             <label for="long_description">Long Description</label>
-            <textarea name="long_description" id="long_description" rows="10">{{ isset($task) ? $task->long_description : old('long_description') }}</textarea>
+            <textarea @class(['outline-red-500' => $errors->has('long_description')]) name="long_description" id="long_description" rows="10">
+                {{ isset($task) ? $task->long_description : old('long_description') }}
+            </textarea>
             @error('long_description')
-                <p class="error-message">{{ $message }}</p>
+                <p class="error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div>
-            <button type="submit">
+        <div class="flex gap-2.5">
+
+            <a class="btn" href={{ route('tasks.index') }}>Cancel</a>
+
+            <button class="btn w-3/5 cursor-pointer" type="submit">
                 @isset($task)
                     Update Task
-                    @else
+                @else
                     Add Task
                 @endisset
             </button>
+
         </div>
     </form>
 @endsection
